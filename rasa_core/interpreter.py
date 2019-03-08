@@ -48,6 +48,12 @@ class NaturalLanguageInterpreter(object):
                 "`--nlu project/model`.")
 
 
+class TrackerAwareNaturalLanguageInterpreter(NaturalLanguageInterpreter):
+    def parse(self, text, tracker):
+        raise NotImplementedError(
+            "TrackerAwareNaturalLanguageInterpreter needs to "
+            "be able to parse messages using tracker state.")
+
 class RegexInterpreter(NaturalLanguageInterpreter):
     @staticmethod
     def allowed_prefixes():
