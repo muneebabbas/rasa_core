@@ -19,9 +19,10 @@ Rasa Core itself does not interpret text. You can use `Rasa NLU <https://rasa.co
 
 
 To use something other than Rasa NLU, you just need to implement a
-subclass of ``Interpreter``
-which has a method ``parse(message)`` which takes a single string argument
-and returns a dict in the following format:
+subclass of ``NaturalLanguageInterpreter`` or ``TrackerAwareNaturalLanguageInterpreter``
+and override the methods ``parse(message: string)`` or ``parse(message: string, tracker: DialogueStateTracker)``
+respectively depending on whether you need access to tracker while parsing the message.
+Both methods should return a dictionary in the following format:
 
 
 .. code-block:: javascript
