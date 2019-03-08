@@ -245,7 +245,8 @@ class MessageProcessor(object):
         elif isinstance(self.interpreter, RasaNLUHttpInterpreter):
             parse_data = self.interpreter.parse(message.text,
                                                 message.message_id)
-        elif isinstance(self.interpreter, TrackerAwareNaturalLanguageInterpreter):
+        elif isinstance(self.interpreter,
+                        TrackerAwareNaturalLanguageInterpreter):
             parse_data = self.interpreter.parse(message.text, tracker)
         else:
             parse_data = self.interpreter.parse(message.text)

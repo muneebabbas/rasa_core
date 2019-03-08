@@ -54,6 +54,7 @@ class TrackerAwareNaturalLanguageInterpreter(NaturalLanguageInterpreter):
             "TrackerAwareNaturalLanguageInterpreter needs to "
             "be able to parse messages using tracker state.")
 
+
 class RegexInterpreter(NaturalLanguageInterpreter):
     @staticmethod
     def allowed_prefixes():

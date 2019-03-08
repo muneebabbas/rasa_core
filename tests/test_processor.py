@@ -49,7 +49,8 @@ def test_http_parsing():
     inter = RasaNLUHttpInterpreter(endpoint=endpoint)
     tracker = DialogueStateTracker('1', [])
     try:
-        MessageProcessor(inter, None, None, None, None)._parse_message(message, tracker)
+        MessageProcessor(
+            inter, None, None, None, None)._parse_message(message, tracker)
     except KeyError:
         pass  # logger looks for intent and entities, so we except
 
