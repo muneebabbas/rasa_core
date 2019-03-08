@@ -9,6 +9,7 @@ from rasa_core.events import (
 from rasa_nlu.training_data import Message
 from rasa_core.processor import MessageProcessor
 from rasa_core.interpreter import RasaNLUHttpInterpreter
+from rasa_core.trackers import DialogueStateTracker
 from rasa_core.utils import EndpointConfig
 from httpretty import httpretty
 
@@ -21,8 +22,6 @@ def test_message_processor(default_processor):
 
 
 def test_message_id_logging(default_processor):
-    from rasa_core.trackers import DialogueStateTracker
-
     message = UserMessage("If Meg was an egg would she still have a leg?")
     tracker = DialogueStateTracker('1', [])
     default_processor._handle_message_with_tracker(message, tracker)
@@ -34,7 +33,8 @@ def test_message_id_logging(default_processor):
 
 def test_parsing(default_processor):
     message = Message('/greet{"name": "boy"}')
-    parsed = default_processor._parse_message(message)
+    tracker = DialogueStateTracker('1', [])
+    parsed = default_processor._parse_message(message, tracker)
     assert parsed["intent"]["name"] == 'greet'
     assert parsed["entities"][0]["entity"] == 'name'
 
@@ -47,8 +47,9 @@ def test_http_parsing():
     endpoint = EndpointConfig('https://interpreter.com')
     httpretty.enable()
     inter = RasaNLUHttpInterpreter(endpoint=endpoint)
+    tracker = DialogueStateTracker('1', [])
     try:
-        MessageProcessor(inter, None, None, None, None)._parse_message(message)
+        MessageProcessor(inter, None, None, None, None)._parse_message(message, tracker)
     except KeyError:
         pass  # logger looks for intent and entities, so we except
 
